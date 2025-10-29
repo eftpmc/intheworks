@@ -11,12 +11,12 @@ AnimatedSprite::AnimatedSprite(const CharacterData& data)
 
 void AnimatedSprite::addAnimation(const std::string& name)
 {
-	if (!texture.loadFromFile(characterData.textureName + "_" + name + ".png", false))
+	sf::Texture& tex = animations[name];
+
+	if (!tex.loadFromFile(characterData.textureName + "_" + name + ".png", false))
 	{
 		// error...
 	}
-
-	animations[name] = texture;
 }
 
 void AnimatedSprite::update(sf::Time deltaTime, const int& state)
