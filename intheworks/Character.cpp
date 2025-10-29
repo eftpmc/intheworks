@@ -1,7 +1,7 @@
 #include "Character.h"
 
-Character::Character(const std::string& textureName, float moveSpeed)
-	: characterSprite(textureName), speed(moveSpeed)
+Character::Character(const CharacterData& data) 
+	: characterSprite(data), speed(data.moveSpeed)
 {
 }
 

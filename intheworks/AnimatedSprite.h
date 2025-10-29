@@ -2,9 +2,11 @@
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
 
+#include "CharacterData.h"
+
 class AnimatedSprite {
 public:
-	AnimatedSprite(const std::string& textureName);
+	AnimatedSprite(const CharacterData& data);
 
 	void addAnimation(const std::string& name);
 
@@ -17,7 +19,7 @@ public:
 	void move(const sf::Vector2f& offset);
 	void scale(const sf::Vector2f& factors);
 protected:
-	std::string textureName;
+	const CharacterData characterData;
 
 	sf::Texture texture;
 	sf::Sprite sprite;

@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Dog.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -149,11 +150,9 @@
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterData.h" />
+    <ClInclude Include="Dog.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\Downloads\Free Street Animal Pixel Art\1 Dog\Walk.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

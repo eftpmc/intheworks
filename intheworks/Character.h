@@ -1,10 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "AnimatedSprite.h"
+#include "CharacterData.h"
 
 class Character {
 public:
-    Character(const std::string& textureName, float moveSpeed);
+    Character(const CharacterData& data);
     virtual void update(sf::Time deltaTime);
     void draw(sf::RenderWindow& window) const;
     sf::Vector2f getPosition() const;

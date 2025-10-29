@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player() : Character("hero", 175.f)
+Player::Player() : Character(CharacterData("hero", 1280, 128, 32, 48, 128, 175.f))
 {
     characterSprite.setPosition({ 1280.f / 2.f, 720.f / 2.f });
 	characterSprite.scale({ 3.f, 3.f });

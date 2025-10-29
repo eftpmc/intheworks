@@ -30,6 +30,7 @@ void Game::update(sf::Time deltaTime)
 {
 	player.handleInput();
 	player.update(deltaTime);
+	dog.update(deltaTime);
 }
 
 void Game::render()
@@ -37,6 +38,7 @@ void Game::render()
 	window.clear(sf::Color::White);
 
 	player.draw(window);
+	dog.draw(window);
 
 	window.display();
 }

@@ -3,6 +3,7 @@
 #include <SFML/System.hpp>
 
 #include "Player.h"
+#include "Dog.h"
 
 class Game {
 	public:
@@ -11,6 +12,7 @@ class Game {
 	private:
 		sf::RenderWindow window;
 		Player player;
+		Dog dog;
 
 		void processEvents();
 		void update(sf::Time deltaTime);

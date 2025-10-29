@@ -1,7 +1,9 @@
 #include "AnimatedSprite.h"
 
-AnimatedSprite::AnimatedSprite(const std::string& textureName)
-	: textureName(textureName), sprite(texture), rectSourceSprite(sf::Vector2(48, 48), sf::Vector2(32, 32))
+AnimatedSprite::AnimatedSprite(const CharacterData& data)
+	: characterData(data),
+	sprite(texture),
+	rectSourceSprite(sf::Vector2(data.padding, data.padding), sf::Vector2(data.size, data.size))
 {
 	sprite.setTextureRect(rectSourceSprite);
 	sprite.setOrigin({ sprite.getLocalBounds().size.x / 2, sprite.getLocalBounds().size.y / 2 });
@@ -9,7 +11,7 @@ AnimatedSprite::AnimatedSprite(const std::string& textureName)
 
 void AnimatedSprite::addAnimation(const std::string& name)
 {
-	if (!texture.loadFromFile(textureName + "_" + name + ".png", false))
+	if (!texture.loadFromFile(characterData.textureName + "_" + name + ".png", false))
 	{
 		// error...
 	}
@@ -21,10 +23,10 @@ void AnimatedSprite::update(sf::Time deltaTime, const int& state)
 {
 	if(elapsedTime > .15f)
 	{
-		rectSourceSprite.position.x += 128;
-		if (rectSourceSprite.position.x >= 1280)
+		rectSourceSprite.position.x += characterData.stepPixels;
+		if (rectSourceSprite.position.x >= characterData.width)
 		{
-			rectSourceSprite.position.x = 48;
+			rectSourceSprite.position.x = characterData.padding;
 		}
 		sprite.setTextureRect(rectSourceSprite);
 		elapsedTime = 0.f;
