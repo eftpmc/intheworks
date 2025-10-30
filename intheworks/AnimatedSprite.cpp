@@ -21,7 +21,7 @@ void AnimatedSprite::addAnimation(const std::string& name)
 
 void AnimatedSprite::update(sf::Time deltaTime, const int& state)
 {
-	if(elapsedTime > .15f)
+	if(elapsedTime > .1f)
 	{
 		rectSourceSprite.position.x += characterData.stepPixels;
 		if (rectSourceSprite.position.x >= characterData.width)
@@ -40,6 +40,9 @@ void AnimatedSprite::update(sf::Time deltaTime, const int& state)
 	}else if(state == 2)
 	{
 		sprite.setTexture(animations["walk"]);
+	}else if(state == 3)
+	{
+		sprite.setTexture(animations["sprint"]);
 	}
 }
 

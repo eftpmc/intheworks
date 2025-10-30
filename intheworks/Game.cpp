@@ -23,6 +23,12 @@ void Game::processEvents()
 	{
 		if (event->is<sf::Event::Closed>())
 			window.close();
+
+		if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+			if (keyPressed->code == sf::Keyboard::Key::LShift) {
+				player.toggleSprint();
+			}
+		}
 	}
 }
 

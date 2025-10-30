@@ -7,6 +7,7 @@ Player::Player() : Character(CharacterData("hero", 1280, 128, 32, 48, 128, 175.f
 
 	characterSprite.addAnimation("idle");
 	characterSprite.addAnimation("walk");
+    characterSprite.addAnimation("sprint");
 }
 
 void Player::handleInput()

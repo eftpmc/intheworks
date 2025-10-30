@@ -8,7 +8,7 @@ Character::Character(const CharacterData& data)
 void Character::update(sf::Time deltaTime)
 {
 	if (velocity.x > 0.f || velocity.x < 0.f || velocity.y > 0.f || velocity.y < 0.f) {
-		state = 2;
+		state = isSprinting ? 3 : 2;
 		characterSprite.move(velocity * speed * deltaTime.asSeconds());
 	}
 	else {
@@ -31,4 +31,16 @@ sf::Vector2f Character::getPosition() const
 void Character::setPosition(const sf::Vector2f& position)
 {
 	characterSprite.setPosition(position);
+}
+
+void Character::toggleSprint() {
+	if (isSprinting) {
+		speed = 175.f;
+		state = 2;
+	}
+	else {
+		speed = 350.f;
+		state = 3;
+	}
+	isSprinting = !isSprinting;
 }
