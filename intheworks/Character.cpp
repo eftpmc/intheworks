@@ -3,19 +3,23 @@
 Character::Character(const CharacterData& data) 
 	: characterSprite(data), speed(data.moveSpeed)
 {
+	characterSprite.setPosition({ 1000.f, 720.f / 2.f });
+	characterSprite.addAnimation("idle");
+	characterSprite.addAnimation("walk");
 }
 
 void Character::update(sf::Time deltaTime)
 {
+	std::string animation;
 	if (velocity.x > 0.f || velocity.x < 0.f || velocity.y > 0.f || velocity.y < 0.f) {
-		state = isSprinting ? 3 : 2;
+		animation = "walk";
 		characterSprite.move(velocity * speed * deltaTime.asSeconds());
 	}
 	else {
-		state = 1;
+		animation = "idle";
 	}
 
-	characterSprite.update(deltaTime, state);
+	characterSprite.update(deltaTime, animation);
 }
 
 void Character::draw(sf::RenderWindow& window) const
@@ -31,16 +35,4 @@ sf::Vector2f Character::getPosition() const
 void Character::setPosition(const sf::Vector2f& position)
 {
 	characterSprite.setPosition(position);
-}
-
-void Character::toggleSprint() {
-	if (isSprinting) {
-		speed = 175.f;
-		state = 2;
-	}
-	else {
-		speed = 350.f;
-		state = 3;
-	}
-	isSprinting = !isSprinting;
 }

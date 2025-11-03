@@ -19,7 +19,7 @@ void AnimatedSprite::addAnimation(const std::string& name)
 	}
 }
 
-void AnimatedSprite::update(sf::Time deltaTime, const int& state)
+void AnimatedSprite::update(sf::Time deltaTime, const std::string& animationName)
 {
 	if(elapsedTime > .1f)
 	{
@@ -34,16 +34,7 @@ void AnimatedSprite::update(sf::Time deltaTime, const int& state)
 
 	elapsedTime += deltaTime.asSeconds();
 
-	if(state == 1)
-	{
-		sprite.setTexture(animations["idle"]);
-	}else if(state == 2)
-	{
-		sprite.setTexture(animations["walk"]);
-	}else if(state == 3)
-	{
-		sprite.setTexture(animations["sprint"]);
-	}
+	sprite.setTexture(animations[animationName]);
 }
 
 void AnimatedSprite::draw(sf::RenderWindow& window) const

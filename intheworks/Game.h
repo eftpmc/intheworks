@@ -1,9 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include <iostream>
 
-#include "Player.h"
-#include "Dog.h"
+#include "Map.h"
+
 
 class Game {
 	public:
@@ -11,8 +12,12 @@ class Game {
 		void run();
 	private:
 		sf::RenderWindow window;
-		Player player;
-		Dog dog;
+		sf::View view;
+
+		Map map;
+		bool dragging = false;
+		sf::Vector2f oldPos;
+		float zoom = 1;
 
 		void processEvents();
 		void update(sf::Time deltaTime);

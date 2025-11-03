@@ -140,19 +140,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedSprite.cpp" />
+    <ClCompile Include="House.cpp" />
+    <ClCompile Include="Building.cpp" />
     <ClCompile Include="Character.cpp" />
-    <ClCompile Include="Dog.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.h" />
+    <ClInclude Include="House.h" />
+    <ClInclude Include="Building.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterData.h" />
-    <ClInclude Include="Dog.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Map.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

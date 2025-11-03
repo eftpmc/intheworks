@@ -1,10 +1,11 @@
 #pragma once
+#include <vector>
 #include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
 
 #include "Character.h"
+#include "Building.h"
 
-class Dog : public Character {
+class World {
 public:
-	Dog();
+	World();
 };

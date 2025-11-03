@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
+#include <string>
 
 #include "CharacterData.h"
 
@@ -10,7 +11,7 @@ public:
 
 	void addAnimation(const std::string& name);
 
-	void update(sf::Time deltaTime, const int& state);
+	void update(sf::Time deltaTime, const std::string& animationName);
 	void draw(sf::RenderWindow& window) const;
 
 	sf::Vector2f getPosition() const;
