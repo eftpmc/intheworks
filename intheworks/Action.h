@@ -41,3 +41,15 @@ public:
 		return false;
 	}
 };
+
+class MoveToAction : public Action {
+	public:
+	MoveToAction()
+		: Action("Move To Target", CharacterData(0.f)) {}
+	void start(ActionContext& ctx);
+	void update(ActionContext& ctx, sf::Time dt);
+	bool isComplete(ActionContext& ctx) const override {
+		// Check if arrived at target
+		return false;
+	}
+};

@@ -41,6 +41,8 @@ Map::Map() : rectSourceSprite(sf::Vector2(0,0), sf::Vector2(16,16)), infile("map
 		50
 	));
 
+
+	characters[0]->requestAction(std::make_unique<MoveToAction>());
 	characters[0]->requestAction(std::make_unique<ChoppingAction>());
 }
 

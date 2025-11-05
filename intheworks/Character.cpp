@@ -117,7 +117,6 @@ bool Character::moveTo(const GameObject* target)
 
 	float distance = pow(pow((targetPos.x - charPos.x), 2) + pow((targetPos.y - charPos.y), 2), 0.5);
 	if (distance < 20.f) {
-		setState(std::make_unique<Idle>());
 		return true;
 	}
 

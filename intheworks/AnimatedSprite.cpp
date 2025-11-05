@@ -1,4 +1,5 @@
 #include "AnimatedSprite.h"
+#include <iostream>
 
 AnimatedSprite::AnimatedSprite(const AnimatedSpriteData& data)
 	: animatedSpriteData(data),
@@ -21,11 +22,13 @@ void AnimatedSprite::addAnimation(const std::string& name)
 
 void AnimatedSprite::setAnimation(const std::string& animationName)
 {
+	std::cout << animationName << std::endl;
 	sprite.setTexture(animations[animationName]);
 }
 
 void AnimatedSprite::update(sf::Time deltaTime)
 {
+	
 	if(elapsedTime > animatedSpriteData.frameTime)
 	{
 		rectSourceSprite.position.x += animatedSpriteData.stepPixels;
