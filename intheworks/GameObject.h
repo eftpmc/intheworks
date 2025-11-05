@@ -39,7 +39,6 @@ public:
 		currentResources = std::max(0, currentResources - amount);
         if(currentResources == 0) {
             isActive = false;
-			std::cout << name << " has been depleted." << std::endl;
 		}
     }
 };

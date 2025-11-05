@@ -29,6 +29,12 @@ public:
     void update(Character& character, sf::Time dt) override;
 };
 
+class Attacking : public CharacterState {
+    public:
+    void onEnter(Character& character) override;
+    void update(Character& character, sf::Time dt) override;
+};
+
 class Character {
 public:
     Character(const CharacterData& charData, const AnimatedSpriteData& spriteData);
@@ -44,7 +50,7 @@ public:
 	void setDirection(const sf::Vector2f& dir);
     void setPosition(const sf::Vector2f& position);
 
-	bool requestAction(std::unique_ptr<Action> action);
+	bool requestAction(std::unique_ptr<Action> action, GameObject* target);
 	void actionCompleted(std::unique_ptr<Action> action);
 
 	bool moveTo(const GameObject* target);

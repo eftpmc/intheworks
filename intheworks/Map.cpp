@@ -42,8 +42,8 @@ Map::Map() : rectSourceSprite(sf::Vector2(0,0), sf::Vector2(16,16)), infile("map
 	));
 
 
-	characters[0]->requestAction(std::make_unique<MoveToAction>());
-	characters[0]->requestAction(std::make_unique<ChoppingAction>());
+	characters[0]->requestAction(std::make_unique<MoveToAction>(), objects[0].get());
+	characters[0]->requestAction(std::make_unique<ChoppingAction>(), objects[0].get());
 }
 
 void Map::update(sf::Time& deltaTime) {

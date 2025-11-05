@@ -42,6 +42,15 @@ void Moving::update(Character& character, sf::Time dt)
 	}
 }
 
+void Attacking::onEnter(Character& character)
+{
+	character.setAnimation("attack");
+}
+
+void Attacking::update(Character& character, sf::Time dt)
+{
+}
+
 void Character::update(sf::Time deltaTime, Map& map)
 {
 	characterSprite.update(deltaTime);
@@ -50,8 +59,7 @@ void Character::update(sf::Time deltaTime, Map& map)
 
 	if (!schedule.empty())
 	{
-		ActionContext ctx{ this, map.getObjects()[0].get()};
-		schedule.front()->update(ctx, deltaTime);
+		schedule.front()->update(deltaTime);
 	}
 }
 
@@ -133,7 +141,7 @@ void Character::scale(const sf::Vector2f& factors)
 	characterSprite.scale(factors);
 }
 
-bool Character::requestAction(std::unique_ptr<Action> action)
+bool Character::requestAction(std::unique_ptr<Action> action, GameObject* target)
 {
 	for(int i = 0; i < sizeof(CharacterData) / sizeof(float); i++)
 	{
@@ -143,12 +151,14 @@ bool Character::requestAction(std::unique_ptr<Action> action)
 			return false;
 	}
 
+	ActionContext ctx{ this, target };
+	action->setContext(ctx);
+
 	schedule.push(std::move(action));
 
 	if(schedule.size() == 1)
 	{
-		ActionContext ctx{ this };
-		schedule.front()->start(ctx);
+		schedule.front()->start();
 	}
 	return true;
 }
@@ -157,6 +167,12 @@ void Character::actionCompleted(std::unique_ptr<Action> action)
 {
 	if (!schedule.empty() && schedule.front()->getName() == action->getName())
 	{
+		schedule.front()->completeAction();
 		schedule.pop();
+	}
+
+	if (!schedule.empty())
+	{
+		schedule.front()->start();
 	}
 }
