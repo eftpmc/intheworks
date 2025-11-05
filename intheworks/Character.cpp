@@ -1,25 +1,58 @@
 #include "Character.h"
+#include "Map.h"
 
-Character::Character(const CharacterData& data) 
-	: characterSprite(data), speed(data.moveSpeed)
+Character::Character(const CharacterData& charData, const AnimatedSpriteData& spriteData)
+	: characterData(charData), characterSprite(spriteData)
 {
+	direction = { 0.f, 0.f };
 	characterSprite.setPosition({ 1000.f, 720.f / 2.f });
 	characterSprite.addAnimation("idle");
 	characterSprite.addAnimation("walk");
+	characterSprite.addAnimation("attack");
+
+	setState(std::make_unique<Idle>());
 }
 
-void Character::update(sf::Time deltaTime)
+void Idle::onEnter(Character& character)
 {
-	std::string animation;
-	if (velocity.x > 0.f || velocity.x < 0.f || velocity.y > 0.f || velocity.y < 0.f) {
-		animation = "walk";
-		characterSprite.move(velocity * speed * deltaTime.asSeconds());
-	}
-	else {
-		animation = "idle";
-	}
+	character.setAnimation("idle");
+	character.setDirection({ 0.f, 0.f });
+}
 
-	characterSprite.update(deltaTime, animation);
+void Idle::update(Character& character, sf::Time dt)
+{
+}
+
+void Moving::onEnter(Character& character)
+{
+	character.setAnimation("walk");
+}
+
+void Moving::update(Character& character, sf::Time dt)
+{
+	sf::Vector2f offset = character.getDirection() * character.getCharacterData().moveSpeed * dt.asSeconds();
+	character.move(offset);
+
+	if (offset.x < 0) {
+		character.scale({ 1.f, 1.f });
+	}
+	else
+	{
+		character.scale({ -1.f, 1.f });
+	}
+}
+
+void Character::update(sf::Time deltaTime, Map& map)
+{
+	characterSprite.update(deltaTime);
+	if(currentState)
+		currentState->update(*this, deltaTime);
+
+	if (!schedule.empty())
+	{
+		ActionContext ctx{ this, map.getObjects()[0].get()};
+		schedule.front()->update(ctx, deltaTime);
+	}
 }
 
 void Character::draw(sf::RenderWindow& window) const
@@ -27,12 +60,104 @@ void Character::draw(sf::RenderWindow& window) const
 	characterSprite.draw(window);
 }
 
+const CharacterData Character::getCharacterData()
+{
+	return characterData;
+}
+
 sf::Vector2f Character::getPosition() const
 {
 	return characterSprite.getPosition();
 }
 
+sf::Vector2f Character::getDirection() const
+{
+	return direction;
+}
+
+void Character::setState(std::unique_ptr<CharacterState> newState)
+{
+	if (currentState)
+		currentState->onExit(*this);
+
+	currentState = std::move(newState);
+
+	if (currentState)
+		currentState->onEnter(*this);
+}
+
+void Character::setAnimation(const std::string& animationName)
+{
+	characterSprite.setAnimation(animationName);
+}
+
+void Character::setDirection(const sf::Vector2f& dir)
+{
+	direction = dir;
+}
+
 void Character::setPosition(const sf::Vector2f& position)
 {
 	characterSprite.setPosition(position);
+}
+
+bool Character::moveTo(const GameObject* target)
+{
+	sf::Vector2f charPos = getPosition();
+	sf::Vector2f targetPos = target->position;
+
+	sf::Vector2f directionToTarget = targetPos - charPos;
+	float length = std::sqrt(directionToTarget.x * directionToTarget.x + directionToTarget.y * directionToTarget.y);
+
+	if (length > 0.f) {
+		directionToTarget /= length;
+	}
+
+	setDirection(directionToTarget);
+
+	float distance = pow(pow((targetPos.x - charPos.x), 2) + pow((targetPos.y - charPos.y), 2), 0.5);
+	if (distance < 20.f) {
+		setState(std::make_unique<Idle>());
+		return true;
+	}
+
+	return false;
+}
+
+void Character::move(const sf::Vector2f& offset)
+{
+	characterSprite.move(offset);
+}
+
+void Character::scale(const sf::Vector2f& factors)
+{
+	characterSprite.scale(factors);
+}
+
+bool Character::requestAction(std::unique_ptr<Action> action)
+{
+	for(int i = 0; i < sizeof(CharacterData) / sizeof(float); i++)
+	{
+		const float* characterDataPtr = reinterpret_cast<const float*>(&characterData);
+		const float* minConditionsPtr = reinterpret_cast<const float*>(&action->getMinConditions());
+		if (characterDataPtr[i] < minConditionsPtr[i])
+			return false;
+	}
+
+	schedule.push(std::move(action));
+
+	if(schedule.size() == 1)
+	{
+		ActionContext ctx{ this };
+		schedule.front()->start(ctx);
+	}
+	return true;
+}
+
+void Character::actionCompleted(std::unique_ptr<Action> action)
+{
+	if (!schedule.empty() && schedule.front()->getName() == action->getName())
+	{
+		schedule.pop();
+	}
 }

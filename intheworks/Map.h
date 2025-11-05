@@ -6,13 +6,17 @@
 #include <sstream>
 #include <vector>
 
+#include "DataClasses.h"
 #include "Character.h"
+#include "GameObject.h"
 
 class Map {
 public:
 	Map();
 	void draw(sf::RenderWindow& window) const;
 	void update(sf::Time& deltaTime);
+
+	std::vector<std::unique_ptr<GameObject>>& getObjects() { return objects; }
 protected:
 	sf::Texture texture;
 	sf::IntRect rectSourceSprite;
@@ -20,7 +24,6 @@ protected:
 	std::vector<sf::Sprite> mapTiles;
 	std::ifstream infile;
 
-	std::vector<Character> characters;
-
-	Character orc = Character(CharacterData("orc", 600, 100, 100, 0, 100, 20.f));
+	std::vector<std::unique_ptr<GameObject>> objects;
+	std::vector<std::unique_ptr<Character>> characters;
 };

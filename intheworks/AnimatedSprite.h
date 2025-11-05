@@ -3,24 +3,27 @@
 #include <unordered_map>
 #include <string>
 
-#include "CharacterData.h"
+#include "DataClasses.h"
 
 class AnimatedSprite {
 public:
-	AnimatedSprite(const CharacterData& data);
+	AnimatedSprite() = default;
+
+	AnimatedSprite(const AnimatedSpriteData& data);
 
 	void addAnimation(const std::string& name);
+	void setAnimation(const std::string& animationName);
 
-	void update(sf::Time deltaTime, const std::string& animationName);
+	void update(sf::Time deltaTime);
 	void draw(sf::RenderWindow& window) const;
 
 	sf::Vector2f getPosition() const;
 	void setPosition(const sf::Vector2f& position);
 
-	void move(const sf::Vector2f& offset);
-	void scale(const sf::Vector2f& factors);
+	virtual void move(const sf::Vector2f& offset);
+	virtual void scale(const sf::Vector2f& factors);
 protected:
-	const CharacterData characterData;
+	const AnimatedSpriteData animatedSpriteData;
 
 	sf::Texture texture;
 	sf::Sprite sprite;
@@ -28,4 +31,5 @@ protected:
 
 	std::unordered_map<std::string, sf::Texture> animations;
 	float elapsedTime = 0.f;
+	int facing = 1;
 };
