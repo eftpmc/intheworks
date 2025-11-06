@@ -58,7 +58,7 @@ void Game::processEvents()
 			if (mouseWheelScroll->delta <= -1)
 				zoom = std::min(2.f, zoom + .1f);
 			else if (mouseWheelScroll->delta >= 1)
-				zoom = std::max(.5f, zoom - .1f);
+				zoom = std::max(.3f, zoom - .1f);
 
 			// Update our view
 			view.setSize(window.getDefaultView().getSize());

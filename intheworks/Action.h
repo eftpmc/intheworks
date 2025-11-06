@@ -19,15 +19,15 @@ public:
 		: name(name), minConditions(minConditions) {
 	}
 
-	void setContext(const ActionContext& context) { ctx = context; }
-	ActionContext& getContext() { return ctx; }
+	void setContext(const ActionContext& context);
+	ActionContext& getContext();
 
 	virtual void start() = 0;
 	virtual void update( sf::Time dt) = 0;
 	virtual void completeAction() = 0;
 
-	std::string getName() const { return name; }
-	const CharacterData& getMinConditions() const { return minConditions; }
+	std::string getName() const;
+	const CharacterData& getMinConditions() const;
 protected:
 	std::string name;
 	const CharacterData minConditions;

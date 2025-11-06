@@ -2,6 +2,21 @@
 #include "Character.h"
 #include "GameObject.h"
 
+void Action::setContext(const ActionContext& context) {
+	{ ctx = context; }
+}
+
+ActionContext& Action::getContext() {
+	return ctx;
+}
+
+std::string Action::getName() const {
+	return name;
+}
+
+const CharacterData& Action::getMinConditions() const {
+	return minConditions;
+}
 void ChoppingAction::start(){
 	ctx.actor->setState(std::make_unique<Attacking>() );
 }

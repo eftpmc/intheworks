@@ -23,7 +23,7 @@ struct AnimatedSpriteData {
         int width,
         int height,
         Size size,
-        int padding,
+        Size padding,
         int stepPixels,
 		float frameTime
     )
@@ -41,7 +41,7 @@ struct AnimatedSpriteData {
     const int width;
     const int height;
 	const Size size;
-    const int padding;
+    const Size padding;
     const int stepPixels;
 	const float frameTime;
 };

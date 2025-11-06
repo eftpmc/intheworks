@@ -9,6 +9,7 @@
 #include "DataClasses.h"
 #include "Character.h"
 #include "GameObject.h"
+#include "Tree.h"
 
 class Map {
 public:

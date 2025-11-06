@@ -32,10 +32,10 @@ Map::Map() : rectSourceSprite(sf::Vector2(0,0), sf::Vector2(16,16)), infile("map
 
 	characters.push_back(std::make_unique<Character>(
 		CharacterData(50.f),
-		AnimatedSpriteData("orc", 600, 100, Size(100, 100), 0, 100, .1f)
+		AnimatedSpriteData("base", 768, 64, Size(64, 64), Size(16,0), 96, .1f)
 		));
 	objects.push_back(std::make_unique<Tree>(
-		AnimatedSpriteData("tree", 112, 42, Size(28, 42), 0, 28, .5f),
+		AnimatedSpriteData("tree", 112, 42, Size(28, 42), Size(0, 0), 28, .5f),
 		sf::Vector2f(800.f, 400.f),
 		"Wood",
 		50

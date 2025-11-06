@@ -6,9 +6,9 @@ Character::Character(const CharacterData& charData, const AnimatedSpriteData& sp
 {
 	direction = { 0.f, 0.f };
 	characterSprite.setPosition({ 1000.f, 720.f / 2.f });
-	characterSprite.addAnimation("idle");
-	characterSprite.addAnimation("walk");
-	characterSprite.addAnimation("attack");
+	characterSprite.addTexture("idle");
+	characterSprite.addTexture("walk");
+	characterSprite.addTexture("attack");
 
 	setState(std::make_unique<Idle>());
 }
@@ -96,7 +96,7 @@ void Character::setState(std::unique_ptr<CharacterState> newState)
 
 void Character::setAnimation(const std::string& animationName)
 {
-	characterSprite.setAnimation(animationName);
+	characterSprite.setTexture(animationName);
 }
 
 void Character::setDirection(const sf::Vector2f& dir)

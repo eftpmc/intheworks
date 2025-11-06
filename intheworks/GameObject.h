@@ -24,7 +24,7 @@ public:
     virtual void draw(sf::RenderWindow& window) const {}
     virtual std::string getType() const { return "GameObject"; }
     virtual void setTexture(std::string textureName) {
-		sprite.setAnimation(textureName);
+		sprite.setTexture(textureName);
     }
 };
 
@@ -41,27 +41,4 @@ public:
             isActive = false;
 		}
     }
-};
-
-class Tree : public ResourceObject {
-public:
-    Tree(const AnimatedSpriteData& spriteData, const sf::Vector2f& pos, const std::string resourceName, const int resourceAmount) : ResourceObject(spriteData, resourceName, resourceAmount) {
-		sprite.addAnimation("idle");
-        sprite.addAnimation("cut");
-		sprite.setAnimation("idle");
-
-        sprite.setPosition(pos);
-        position = pos;
-        name = "Tree";
-	}
-
-    void update(sf::Time deltaTime) override {
-		sprite.update(deltaTime);
-    }
-
-    void draw(sf::RenderWindow& window) const override {
-        sprite.draw(window);
-	}
-
-    std::string getType() const override { return "Tree"; }
 };

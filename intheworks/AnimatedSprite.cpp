@@ -4,15 +4,15 @@
 AnimatedSprite::AnimatedSprite(const AnimatedSpriteData& data)
 	: animatedSpriteData(data),
 	sprite(texture),
-	rectSourceSprite(sf::Vector2(data.padding, data.padding), sf::Vector2(data.size.x, data.size.y))
+	rectSourceSprite(sf::Vector2(data.padding.x, data.padding.y), sf::Vector2(data.size.x, data.size.y))
 {
 	sprite.setTextureRect(rectSourceSprite);
 	sprite.setOrigin({ sprite.getLocalBounds().size.x / 2, sprite.getLocalBounds().size.y / 2 });
 }
 
-void AnimatedSprite::addAnimation(const std::string& name)
+void AnimatedSprite::addTexture(const std::string& name)
 {
-	sf::Texture& tex = animations[name];
+	sf::Texture& tex = textures[name];
 
 	if (!tex.loadFromFile(animatedSpriteData.textureName + "_" + name + ".png", false))
 	{
@@ -20,10 +20,10 @@ void AnimatedSprite::addAnimation(const std::string& name)
 	}
 }
 
-void AnimatedSprite::setAnimation(const std::string& animationName)
+void AnimatedSprite::setTexture(const std::string& textureName)
 {
-	std::cout << animationName << std::endl;
-	sprite.setTexture(animations[animationName]);
+	std::cout << textureName << std::endl;
+	sprite.setTexture(textures[textureName]);
 }
 
 void AnimatedSprite::update(sf::Time deltaTime)
@@ -34,7 +34,7 @@ void AnimatedSprite::update(sf::Time deltaTime)
 		rectSourceSprite.position.x += animatedSpriteData.stepPixels;
 		if (rectSourceSprite.position.x >= animatedSpriteData.width)
 		{
-			rectSourceSprite.position.x = animatedSpriteData.padding;
+			rectSourceSprite.position.x = animatedSpriteData.padding.x;
 		}
 		sprite.setTextureRect(rectSourceSprite);
 		elapsedTime = 0.f;

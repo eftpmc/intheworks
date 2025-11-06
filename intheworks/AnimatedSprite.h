@@ -11,8 +11,8 @@ public:
 
 	AnimatedSprite(const AnimatedSpriteData& data);
 
-	void addAnimation(const std::string& name);
-	void setAnimation(const std::string& animationName);
+	void addTexture(const std::string& name);
+	void setTexture(const std::string& textureName);
 
 	void update(sf::Time deltaTime);
 	void draw(sf::RenderWindow& window) const;
@@ -29,7 +29,7 @@ protected:
 	sf::Sprite sprite;
 	sf::IntRect rectSourceSprite;
 
-	std::unordered_map<std::string, sf::Texture> animations;
+	std::unordered_map<std::string, sf::Texture> textures;
 	float elapsedTime = 0.f;
 	int facing = 1;
 };
