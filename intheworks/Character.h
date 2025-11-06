@@ -5,6 +5,7 @@
 #include "AnimatedSprite.h"
 #include "DataClasses.h"
 #include "Action.h"
+#include "Inventory.h"
 
 class Character;
 class Map;
@@ -49,6 +50,12 @@ public:
     void setAnimation(const std::string& animationName);
 	void setDirection(const sf::Vector2f& dir);
     void setPosition(const sf::Vector2f& position);
+	void addToInventory(const std::string& itemName, int quantity) {
+        inventory.addItem(itemName, quantity);
+	}
+    void removeFromInventory(const std::string& itemName, int quantity) {
+        inventory.removeItem(itemName, quantity);
+    }
 
 	bool requestAction(std::unique_ptr<Action> action, GameObject* target);
 	void actionCompleted(std::unique_ptr<Action> action);
@@ -62,6 +69,7 @@ protected:
 
     std::unique_ptr<CharacterState> currentState;
 	std::queue<std::unique_ptr<Action>> schedule;
+	Inventory inventory;
 
     sf::Vector2f direction;
 };

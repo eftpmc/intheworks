@@ -14,6 +14,7 @@ void ChoppingAction::update(sf::Time dt) {
 			if (elapsedTime.asSeconds() >= 2.f) {
 				if (auto* resource = dynamic_cast<ResourceObject*>(ctx.target)) {
 					resource->harvest(5);
+					ctx.actor->addToInventory(resource->resourceType, 5);
 
 					elapsedTime = sf::Time::Zero;
 				}

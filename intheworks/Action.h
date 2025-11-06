@@ -9,8 +9,8 @@ class Character;
 class GameObject;
 
 struct ActionContext {
-	Character* actor;
-	GameObject* target;
+	Character* actor = nullptr;
+	GameObject* target = nullptr;
 };
 
 class Action {
