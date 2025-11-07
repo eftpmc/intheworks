@@ -2,15 +2,20 @@
 #include <string>
 #include <SFML/System.hpp>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "DataClasses.h"
 
 class Character;
 
 class GameObject;
 
+class Map;
+
 struct ActionContext {
 	Character* actor = nullptr;
 	GameObject* target = nullptr;
+	Map* map = nullptr;
 };
 
 class Action {

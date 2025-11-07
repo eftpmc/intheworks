@@ -164,7 +164,7 @@ void Character::scale(const sf::Vector2f& factors)
 	characterSprite.scale(factors);
 }
 
-bool Character::requestAction(std::unique_ptr<Action> action, GameObject* target)
+bool Character::requestAction(std::unique_ptr<Action> action, GameObject* target, Map* map)
 {
 	for(int i = 0; i < sizeof(CharacterData) / sizeof(float); i++)
 	{
@@ -174,7 +174,7 @@ bool Character::requestAction(std::unique_ptr<Action> action, GameObject* target
 			return false;
 	}
 
-	ActionContext ctx{ this, target };
+	ActionContext ctx{ this, target, map };
 	action->setContext(ctx);
 
 	schedule.push(std::move(action));

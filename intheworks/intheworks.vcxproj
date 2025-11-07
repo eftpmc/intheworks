@@ -145,6 +145,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Spritesheet.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,8 +157,10 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Spritesheet.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="Wood.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

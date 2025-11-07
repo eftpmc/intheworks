@@ -26,6 +26,11 @@ public:
     virtual void setTexture(std::string textureName) {
 		sprite.setTexture(textureName);
     }
+    virtual void setPosition(sf::Vector2f pos) {
+        sprite.setPosition(pos);
+        position = pos;
+    }
+    virtual std::unique_ptr<GameObject> clone() const = 0;
 };
 
 class ResourceObject : public GameObject {

@@ -3,13 +3,12 @@
 
 class Tree : public ResourceObject {
 public:
-    Tree(const AnimatedSpriteData& spriteData, const sf::Vector2f& pos, const std::string resourceName, const int resourceAmount) : ResourceObject(spriteData, resourceName, resourceAmount) {
+    Tree(const AnimatedSpriteData& spriteData, const std::string resourceName, const int resourceAmount) : ResourceObject(spriteData, resourceName, resourceAmount) {
         sprite.addTexture("idle", 0);
         sprite.addTexture("cut", 0);
+        sprite.addTexture("shake", 0);
         sprite.setTexture("idle");
 
-        sprite.setPosition(pos);
-        position = pos;
         name = "Tree";
     }
 
@@ -19,6 +18,10 @@ public:
 
     void draw(sf::RenderWindow& window) const override {
         sprite.draw(window);
+    }
+
+    std::unique_ptr<GameObject> clone() const override {
+        return std::make_unique<Tree>(*this);
     }
 
     std::string getType() const override { return "Tree"; }

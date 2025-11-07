@@ -63,7 +63,7 @@ public:
         inventory.removeItem(itemName, quantity);
     }
 
-	bool requestAction(std::unique_ptr<Action> action, GameObject* target);
+	bool requestAction(std::unique_ptr<Action> action, GameObject* target, Map* map);
 	void actionCompleted(std::unique_ptr<Action> action);
 
 	bool moveTo(const GameObject* target);

@@ -8,16 +8,14 @@
 
 #include "DataClasses.h"
 #include "Character.h"
-#include "GameObject.h"
-#include "Tree.h"
+#include "ObjectManager.h"
 
 class Map {
 public:
 	Map();
+	ObjectManager& getObjectManager() { return objectManager; }
 	void draw(sf::RenderWindow& window) const;
 	void update(sf::Time& deltaTime);
-
-	std::vector<std::unique_ptr<GameObject>>& getObjects() { return objects; }
 protected:
 	sf::Texture texture;
 	sf::IntRect rectSourceSprite;
@@ -25,6 +23,6 @@ protected:
 	std::vector<sf::Sprite> mapTiles;
 	std::ifstream infile;
 
-	std::vector<std::unique_ptr<GameObject>> objects;
+	ObjectManager objectManager;
 	std::vector<std::unique_ptr<Character>> characters;
 };
