@@ -6,10 +6,21 @@ Character::Character(const CharacterData& charData, const AnimatedSpriteData& sp
 {
 	direction = { 0.f, 0.f };
 	
-	characterSprite.addTexture("idle");
-	characterSprite.addTexture("walk");
-	characterSprite.addTexture("attack");
-	characterSprite.addTexture("axe");
+	characterSprite.addTexture("idle", 0);
+	characterSprite.addTexture("idle", 1);
+	characterSprite.addTexture("idle", 2);
+
+	characterSprite.addTexture("walk", 0);
+	characterSprite.addTexture("walk", 1);
+	characterSprite.addTexture("walk", 2);
+
+	characterSprite.addTexture("attack", 0);
+	characterSprite.addTexture("attack", 1);
+	characterSprite.addTexture("attack", 2);
+
+	characterSprite.addTexture("axe", 0);
+	characterSprite.addTexture("axe", 1);
+	characterSprite.addTexture("axe", 2);
 
 	characterSprite.setPosition({ 1000.f, 720.f / 2.f });
 

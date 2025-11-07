@@ -4,8 +4,8 @@
 class Tree : public ResourceObject {
 public:
     Tree(const AnimatedSpriteData& spriteData, const sf::Vector2f& pos, const std::string resourceName, const int resourceAmount) : ResourceObject(spriteData, resourceName, resourceAmount) {
-        sprite.addTexture("idle");
-        sprite.addTexture("cut");
+        sprite.addTexture("idle", 0);
+        sprite.addTexture("cut", 0);
         sprite.setTexture("idle");
 
         sprite.setPosition(pos);

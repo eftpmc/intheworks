@@ -27,8 +27,8 @@ void Spritesheet::draw(sf::RenderWindow& window) const {
 	window.draw(sprite);
 }
 
-void Spritesheet::setTexture(const std::string& textureName, const AnimatedSpriteData& data) {
-	if (!texture.loadFromFile(data.textureName + "_" + textureName + ".png", false))
+void Spritesheet::setTexture(const std::string& textureName, int layer, const AnimatedSpriteData& data) {
+	if (!texture.loadFromFile(data.textureName + "_" + textureName + std::to_string(layer) + ".png", false))
 	{
 		// error...
 	}

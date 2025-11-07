@@ -10,7 +10,7 @@ public:
 	void update(sf::Time deltaTime, const AnimatedSpriteData& data);
 	void draw(sf::RenderWindow& window) const;
 
-	void setTexture(const std::string& textureName, const AnimatedSpriteData& data);
+	void setTexture(const std::string& textureName, int layer, const AnimatedSpriteData& data);
 
 	sf::Vector2f getPosition() const;
 	void setPosition(const sf::Vector2f& position);

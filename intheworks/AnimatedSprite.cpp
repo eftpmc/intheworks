@@ -6,9 +6,9 @@ AnimatedSprite::AnimatedSprite(const AnimatedSpriteData& data)
 {
 }
 
-void AnimatedSprite::addTexture(const std::string& name)
+void AnimatedSprite::addTexture(const std::string& name, int layer)
 {
-	spritesheets[name].setTexture(name, animatedSpriteData);
+	spritesheets[name][layer].setTexture(name, layer, animatedSpriteData);
 }
 
 void AnimatedSprite::setTexture(const std::string& textureName)
@@ -18,12 +18,16 @@ void AnimatedSprite::setTexture(const std::string& textureName)
 
 void AnimatedSprite::update(sf::Time deltaTime)
 {
-	spritesheets[currentAnimation].setPosition(position);
-	spritesheets[currentAnimation].update(deltaTime, animatedSpriteData);
+	for (int i = 0; i < 3; i++) {
+		spritesheets[currentAnimation][i].setPosition(position);
+		spritesheets[currentAnimation][i].update(deltaTime, animatedSpriteData);
+	}
 }
 
 void AnimatedSprite::draw(sf::RenderWindow& window) const {
-	spritesheets.at(currentAnimation).draw(window);
+	for (int i = 0; i < 3; i++) {
+		spritesheets.at(currentAnimation)[i].draw(window);
+	}
 }
 
 sf::Vector2f AnimatedSprite::getPosition() const
@@ -34,16 +38,22 @@ sf::Vector2f AnimatedSprite::getPosition() const
 void AnimatedSprite::setPosition(const sf::Vector2f& pos) {
 	position = pos;
 	for (auto& [_, sheet] : spritesheets)
-		sheet.setPosition(position);
+		for (int i = 0; i < 3; i++) {
+			sheet[i].setPosition(position);
+		}
 }
 
 void AnimatedSprite::move(const sf::Vector2f& offset) {
 	position += offset;
 	for (auto& [_, sheet] : spritesheets)
-		sheet.setPosition(position);
+		for (int i = 0; i < 3; i++) {
+			sheet[i].setPosition(position);
+		}
 }
 
 void AnimatedSprite::scale(const sf::Vector2f& factors) {
 	for (auto& [name, sheet] : spritesheets)
-		sheet.scale(factors);
+		for (int i = 0; i < 3; i++) {
+			sheet[i].scale(factors);
+		}
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
+#include <array>
 #include <string>
 
 #include "DataClasses.h"
@@ -12,7 +13,7 @@ public:
 
 	AnimatedSprite(const AnimatedSpriteData& data);
 
-	void addTexture(const std::string& name);
+	void addTexture(const std::string& name, int layer);
 	void setTexture(const std::string& textureName);
 
 	void update(sf::Time deltaTime);
@@ -27,6 +28,6 @@ protected:
 	const AnimatedSpriteData animatedSpriteData;
 	std::string currentAnimation = "idle";
 
-	std::unordered_map<std::string, Spritesheet> spritesheets;
+	std::unordered_map<std::string, std::array<Spritesheet, 3>> spritesheets;
 	sf::Vector2f position{ 0.f, 0.f };
 };
