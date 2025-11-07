@@ -42,6 +42,8 @@ public:
 	void start() override;
 	void update(sf::Time dt) override;
 	void completeAction() override;
+private:
+	bool harvested = false;
 };
 
 class MoveToAction : public Action {

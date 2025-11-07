@@ -26,13 +26,18 @@ void ChoppingAction::update(sf::Time dt) {
 
 	if (ctx.target->isActive) {
 
-			if (elapsedTime.asSeconds() >= .8f) {
+			if (elapsedTime.asSeconds() >= .6f && harvested == false) {
 				if (auto* resource = dynamic_cast<ResourceObject*>(ctx.target)) {
 					resource->harvest(5);
 					ctx.actor->addToInventory(resource->resourceType, 5);
 
 					elapsedTime = sf::Time::Zero;
+					harvested = true;
 				}
+			}
+			else if (elapsedTime.asSeconds() >= .2f && harvested) {
+				elapsedTime = sf::Time::Zero;
+				harvested = false;
 			}
 	}
 	else {
