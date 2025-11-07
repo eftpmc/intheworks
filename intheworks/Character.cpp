@@ -5,10 +5,13 @@ Character::Character(const CharacterData& charData, const AnimatedSpriteData& sp
 	: characterData(charData), characterSprite(spriteData)
 {
 	direction = { 0.f, 0.f };
-	characterSprite.setPosition({ 1000.f, 720.f / 2.f });
+	
 	characterSprite.addTexture("idle");
 	characterSprite.addTexture("walk");
 	characterSprite.addTexture("attack");
+	characterSprite.addTexture("axe");
+
+	characterSprite.setPosition({ 1000.f, 720.f / 2.f });
 
 	setState(std::make_unique<Idle>());
 }
@@ -33,7 +36,7 @@ void Moving::update(Character& character, sf::Time dt)
 	sf::Vector2f offset = character.getDirection() * character.getCharacterData().moveSpeed * dt.asSeconds();
 	character.move(offset);
 
-	if (offset.x < 0) {
+	if (offset.x > 0) {
 		character.scale({ 1.f, 1.f });
 	}
 	else
@@ -48,6 +51,15 @@ void Attacking::onEnter(Character& character)
 }
 
 void Attacking::update(Character& character, sf::Time dt)
+{
+}
+
+void Chopping::onEnter(Character& character)
+{
+	character.setAnimation("axe");
+}
+
+void Chopping::update(Character& character, sf::Time dt)
 {
 }
 

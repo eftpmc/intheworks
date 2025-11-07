@@ -18,7 +18,7 @@ const CharacterData& Action::getMinConditions() const {
 	return minConditions;
 }
 void ChoppingAction::start(){
-	ctx.actor->setState(std::make_unique<Attacking>() );
+	ctx.actor->setState(std::make_unique<Chopping>() );
 }
 
 void ChoppingAction::update(sf::Time dt) {
@@ -26,7 +26,7 @@ void ChoppingAction::update(sf::Time dt) {
 
 	if (ctx.target->isActive) {
 
-			if (elapsedTime.asSeconds() >= 2.f) {
+			if (elapsedTime.asSeconds() >= .8f) {
 				if (auto* resource = dynamic_cast<ResourceObject*>(ctx.target)) {
 					resource->harvest(5);
 					ctx.actor->addToInventory(resource->resourceType, 5);

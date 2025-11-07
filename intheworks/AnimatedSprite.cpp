@@ -2,67 +2,48 @@
 #include <iostream>
 
 AnimatedSprite::AnimatedSprite(const AnimatedSpriteData& data)
-	: animatedSpriteData(data),
-	sprite(texture),
-	rectSourceSprite(sf::Vector2(data.padding.x, data.padding.y), sf::Vector2(data.size.x, data.size.y))
+	: animatedSpriteData(data)
 {
-	sprite.setTextureRect(rectSourceSprite);
-	sprite.setOrigin({ sprite.getLocalBounds().size.x / 2, sprite.getLocalBounds().size.y / 2 });
 }
 
 void AnimatedSprite::addTexture(const std::string& name)
 {
-	sf::Texture& tex = textures[name];
-
-	if (!tex.loadFromFile(animatedSpriteData.textureName + "_" + name + ".png", false))
-	{
-		// error...
-	}
+	spritesheets[name].setTexture(name, animatedSpriteData);
 }
 
 void AnimatedSprite::setTexture(const std::string& textureName)
 {
-	std::cout << textureName << std::endl;
-	sprite.setTexture(textures[textureName]);
+	currentAnimation = textureName;
 }
 
 void AnimatedSprite::update(sf::Time deltaTime)
 {
-	
-	if(elapsedTime > animatedSpriteData.frameTime)
-	{
-		rectSourceSprite.position.x += animatedSpriteData.stepPixels;
-		if (rectSourceSprite.position.x >= animatedSpriteData.width)
-		{
-			rectSourceSprite.position.x = animatedSpriteData.padding.x;
-		}
-		sprite.setTextureRect(rectSourceSprite);
-		elapsedTime = 0.f;
-	}
-
-	elapsedTime += deltaTime.asSeconds();
+	spritesheets[currentAnimation].setPosition(position);
+	spritesheets[currentAnimation].update(deltaTime, animatedSpriteData);
 }
 
-void AnimatedSprite::draw(sf::RenderWindow& window) const
-{
-	window.draw(sprite);
-}	
+void AnimatedSprite::draw(sf::RenderWindow& window) const {
+	spritesheets.at(currentAnimation).draw(window);
+}
 
 sf::Vector2f AnimatedSprite::getPosition() const
 {
-	return sprite.getPosition();
+	return position;
 }
 
-void AnimatedSprite::setPosition(const sf::Vector2f& position) {
-	sprite.setPosition(position);
+void AnimatedSprite::setPosition(const sf::Vector2f& pos) {
+	position = pos;
+	for (auto& [_, sheet] : spritesheets)
+		sheet.setPosition(position);
 }
 
-void AnimatedSprite::move(const sf::Vector2f& offset)
-{
-	sprite.move(offset);
+void AnimatedSprite::move(const sf::Vector2f& offset) {
+	position += offset;
+	for (auto& [_, sheet] : spritesheets)
+		sheet.setPosition(position);
 }
 
-void AnimatedSprite::scale(const sf::Vector2f& factors)
-{
-	sprite.scale(factors);
+void AnimatedSprite::scale(const sf::Vector2f& factors) {
+	for (auto& [name, sheet] : spritesheets)
+		sheet.scale(factors);
 }

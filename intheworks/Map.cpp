@@ -40,10 +40,26 @@ Map::Map() : rectSourceSprite(sf::Vector2(0,0), sf::Vector2(16,16)), infile("map
 		"Wood",
 		50
 	));
+	objects.push_back(std::make_unique<Tree>(
+		AnimatedSpriteData("tree", 112, 42, Size(28, 42), Size(0, 0), 28, .5f),
+		sf::Vector2f(300.f, 200.f),
+		"Wood",
+		50
+	));
+	objects.push_back(std::make_unique<Tree>(
+		AnimatedSpriteData("tree", 112, 42, Size(28, 42), Size(0, 0), 28, .5f),
+		sf::Vector2f(1000.f, 100.f),
+		"Wood",
+		50
+	));
 
 
 	characters[0]->requestAction(std::make_unique<MoveToAction>(), objects[0].get());
 	characters[0]->requestAction(std::make_unique<ChoppingAction>(), objects[0].get());
+	characters[0]->requestAction(std::make_unique<MoveToAction>(), objects[1].get());
+	characters[0]->requestAction(std::make_unique<ChoppingAction>(), objects[1].get());
+	characters[0]->requestAction(std::make_unique<MoveToAction>(), objects[2].get());
+	characters[0]->requestAction(std::make_unique<ChoppingAction>(), objects[2].get());
 }
 
 void Map::update(sf::Time& deltaTime) {

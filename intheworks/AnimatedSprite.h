@@ -4,6 +4,7 @@
 #include <string>
 
 #include "DataClasses.h"
+#include "Spritesheet.h"
 
 class AnimatedSprite {
 public:
@@ -24,12 +25,8 @@ public:
 	virtual void scale(const sf::Vector2f& factors);
 protected:
 	const AnimatedSpriteData animatedSpriteData;
+	std::string currentAnimation = "idle";
 
-	sf::Texture texture;
-	sf::Sprite sprite;
-	sf::IntRect rectSourceSprite;
-
-	std::unordered_map<std::string, sf::Texture> textures;
-	float elapsedTime = 0.f;
-	int facing = 1;
+	std::unordered_map<std::string, Spritesheet> spritesheets;
+	sf::Vector2f position{ 0.f, 0.f };
 };

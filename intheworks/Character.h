@@ -36,6 +36,12 @@ class Attacking : public CharacterState {
     void update(Character& character, sf::Time dt) override;
 };
 
+class Chopping : public CharacterState {
+public:
+    void onEnter(Character& character) override;
+    void update(Character& character, sf::Time dt) override;
+};
+
 class Character {
 public:
     Character(const CharacterData& charData, const AnimatedSpriteData& spriteData);
