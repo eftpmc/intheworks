@@ -23,37 +23,34 @@ void ChoppingAction::start(){
 }
 
 void ChoppingAction::update(sf::Time dt) {
-    elapsedTime += dt;
+	elapsedTime += dt;
 
-    if (!ctx.target->isActive) {
-        // Once inactive, finalize the chop
-        ctx.target->setTexture("cut");
-        ctx.actor->actionCompleted(std::make_unique<ChoppingAction>());
-        return;
-    }
+	if (ctx.target->isActive) {
 
-    // Axe impact around 0.7s -> trigger shake + harvest
-    if (elapsedTime.asSeconds() >= 0.7f && stage == 1) {
-        ctx.target->setTexture("shake");
+		if (elapsedTime.asSeconds() >= .6f && stage == 1) {
+			if (auto* resource = dynamic_cast<ResourceObject*>(ctx.target)) {
+				resource->harvest(5);
 
-        if (auto* resource = dynamic_cast<ResourceObject*>(ctx.target)) {
-            resource->harvest(5);
-            ctx.actor->addToInventory(resource->resourceType, 5);
-
-            // Optional: if resource depleted, it will become inactive,
-            // triggering the above 'inactive' branch next update
-        }
-
-        stage++;
-        elapsedTime = sf::Time::Zero;
-    }
-
-    // Allow shake to play for full duration (~0.2s total)
-    if (elapsedTime.asSeconds() >= 0.2f && stage == 2) {
-        ctx.target->setTexture("idle");
-        stage = 1;                 // ready for next swing if looping
-        elapsedTime = sf::Time::Zero;
-    }
+				elapsedTime = sf::Time::Zero;
+				stage++;
+			}
+		}
+		else if (elapsedTime.asSeconds() >= .2f && stage == 2) {
+			elapsedTime = sf::Time::Zero;
+			stage = 1;
+		}
+	}
+	else {
+		srand(static_cast<unsigned int>(time(0)));
+		for (int i = 0; i < 3; i++) {
+			int min = 0;
+			int max = 20;
+			int x = (min + (rand() % (max - min + 1))) - 10;
+			int y = (min + (rand() % (max - min + 1))) - 10;
+			ctx.map->getObjectManager().createObject("Wood", sf::Vector2f(ctx.target->position.x + x, ctx.target->position.y + y));
+		}
+		ctx.actor->actionCompleted(std::make_unique<ChoppingAction>());
+	}
 }
 
 void ChoppingAction::completeAction() {

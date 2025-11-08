@@ -36,6 +36,22 @@ void ObjectManager::createObject(std::string objectName, sf::Vector2f pos) {
 	}
 }
 
+void ObjectManager::removeObject(GameObject* objectPtr) {
+    for (auto& [type, objectList] : objects) {
+        auto it = std::remove_if(objectList.begin(), objectList.end(),
+            [objectPtr](const std::unique_ptr<GameObject>& obj) {
+                return obj.get() == objectPtr;
+            });
+
+        if (it != objectList.end()) {
+            objectList.erase(it, objectList.end());
+            std::cout << "Removed object of type: " << type << std::endl;
+            return;
+        }
+    }
+    std::cout << "Object not found in ObjectManager.\n";
+}
+
 namespace {
     inline bool aabbOverlap(const sf::Vector2f& posA, const sf::Vector2f& sizeA,
         const sf::Vector2f& posB, const sf::Vector2f& sizeB) {
