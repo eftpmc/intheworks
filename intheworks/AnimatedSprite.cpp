@@ -35,6 +35,10 @@ sf::Vector2f AnimatedSprite::getPosition() const
 	return position;
 }
 
+sf::FloatRect AnimatedSprite::getGlobalBounds() const {
+	return spritesheets.at(currentAnimation)[0].getGlobalBounds();
+}
+
 void AnimatedSprite::setPosition(const sf::Vector2f& pos) {
 	position = pos;
 	for (auto& [_, sheet] : spritesheets)

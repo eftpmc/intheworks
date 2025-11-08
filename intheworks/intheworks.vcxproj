@@ -142,6 +142,7 @@
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -151,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="Action.h" />
     <ClInclude Include="AnimatedSprite.h" />
+    <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="DataClasses.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Character.h" />
@@ -160,6 +162,8 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Spritesheet.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="UIElement.h" />
+    <ClInclude Include="UIElementManager.h" />
     <ClInclude Include="Wood.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

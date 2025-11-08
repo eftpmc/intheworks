@@ -13,6 +13,7 @@ public:
 	void setTexture(const std::string& textureName, int layer, const AnimatedSpriteData& data);
 
 	sf::Vector2f getPosition() const;
+	sf::FloatRect getGlobalBounds() const;
 	void setPosition(const sf::Vector2f& position);
 	void move(const sf::Vector2f& offset);
 	void scale(const sf::Vector2f& factors);

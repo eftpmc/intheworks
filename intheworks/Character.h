@@ -45,12 +45,13 @@ public:
 class Character {
 public:
     Character(const CharacterData& charData, const AnimatedSpriteData& spriteData);
-    virtual void update(sf::Time deltaTime, Map& map);
+    virtual void update(sf::Time deltaTime);
     void draw(sf::RenderWindow& window) const;
 
     const CharacterData getCharacterData();
     sf::Vector2f getDirection() const;
     sf::Vector2f getPosition() const;
+    sf::FloatRect getGlobalBounds() const;
 
     void setState(std::unique_ptr<CharacterState> newState);
     void setAnimation(const std::string& animationName);
@@ -69,6 +70,7 @@ public:
 	bool moveTo(const GameObject* target);
     void move(const sf::Vector2f& offset);
 	void scale(const sf::Vector2f& factors);
+    std::unique_ptr<Character> clone() const;
 protected:
     AnimatedSprite characterSprite;
 	const CharacterData characterData;

@@ -19,7 +19,9 @@ public:
 	void update(sf::Time deltaTime);
 	void draw(sf::RenderWindow& window) const;
 
+	const AnimatedSpriteData& getData() const { return animatedSpriteData; }
 	sf::Vector2f getPosition() const;
+	sf::FloatRect getGlobalBounds() const;
 	void setPosition(const sf::Vector2f& position);
 
 	virtual void move(const sf::Vector2f& offset);

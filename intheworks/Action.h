@@ -2,8 +2,6 @@
 #include <string>
 #include <SFML/System.hpp>
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
 #include "DataClasses.h"
 
 class Character;
@@ -48,7 +46,7 @@ public:
 	void update(sf::Time dt) override;
 	void completeAction() override;
 private:
-	bool harvested = false;
+	int stage = 1;
 };
 
 class MoveToAction : public Action {

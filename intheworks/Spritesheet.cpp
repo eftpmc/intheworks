@@ -9,18 +9,19 @@ Spritesheet::Spritesheet() :
 }
 
 void Spritesheet::update(sf::Time deltaTime, const AnimatedSpriteData& data) {
-	if (elapsedTime > data.frameTime)
-	{
+	elapsedTime += deltaTime.asSeconds();
+
+	while (elapsedTime >= data.frameTime) {
+		elapsedTime -= data.frameTime;
+
 		rectSourceSprite.position.x += data.stepPixels;
-		if (rectSourceSprite.position.x >= data.width)
-		{
+
+		if (rectSourceSprite.position.x >= data.width) {
 			rectSourceSprite.position.x = data.padding.x;
 		}
-		sprite.setTextureRect(rectSourceSprite);
-		elapsedTime = 0.f;
-	}
 
-	elapsedTime += deltaTime.asSeconds();
+		sprite.setTextureRect(rectSourceSprite);
+	}
 }
 
 void Spritesheet::draw(sf::RenderWindow& window) const {
@@ -38,11 +39,17 @@ void Spritesheet::setTexture(const std::string& textureName, int layer, const An
 	sprite.setTexture(texture);
 
 	sprite.setOrigin(sf::Vector2f(data.size.x / 2.f, data.size.y / 2.f));
+
+	elapsedTime = 0.f;
 }
 
 sf::Vector2f Spritesheet::getPosition() const
 {
 	return sprite.getPosition();
+}
+
+sf::FloatRect Spritesheet::getGlobalBounds() const {
+	return sprite.getGlobalBounds();
 }
 
 void Spritesheet::setPosition(const sf::Vector2f& position) {

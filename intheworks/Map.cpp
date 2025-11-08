@@ -30,14 +30,12 @@ Map::Map() : rectSourceSprite(sf::Vector2(0,0), sf::Vector2(16,16)), infile("map
 		lineNumber++;
 	}
 
-	characters.push_back(std::make_unique<Character>(
-		CharacterData(50.f),
-		AnimatedSpriteData("base", 768, 64, Size(64, 64), Size(16,0), 96, .1f)
-		));
+	characterManager.createCharacter("Base", sf::Vector2f(800, 500));
 	objectManager.createObject("Tree", sf::Vector2f(1000.f, 100.f));
 	objectManager.createObject("Tree", sf::Vector2f(1100.f, 300.f));
 	objectManager.createObject("Tree", sf::Vector2f(900.f, 700.f));
 
+	Character* human = characterManager.queryArea(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f))[0];
 
 	std::vector<GameObject*> assigned;
 
@@ -56,17 +54,15 @@ Map::Map() : rectSourceSprite(sf::Vector2(0,0), sf::Vector2(16,16)), infile("map
 
 		if (it != query.end()) {
 			GameObject* target = *it;
-			characters[0]->requestAction(std::make_unique<MoveToAction>(), target, this);
-			characters[0]->requestAction(std::make_unique<ChoppingAction>(), target, this);
+			human->requestAction(std::make_unique<MoveToAction>(), target, this);
+			human->requestAction(std::make_unique<ChoppingAction>(), target, this);
 			assigned.push_back(target);
 		}
 	}
 }
 
 void Map::update(sf::Time& deltaTime) {
-	for (auto& character : characters) {
-		character->update(deltaTime, *this);
-	}
+	characterManager.update(deltaTime);
 	objectManager.update(deltaTime);
 }
 
@@ -74,8 +70,6 @@ void Map::draw(sf::RenderWindow& window) const {
 	for (const auto& tile : mapTiles) {
 		window.draw(tile);
 	}
-	for (const auto& character : characters) {
-		character->draw(window);
-	}
+	characterManager.draw(window);
 	objectManager.draw(window);
 }

@@ -14,6 +14,10 @@ Character::Character(const CharacterData& charData, const AnimatedSpriteData& sp
 	characterSprite.addTexture("walk", 1);
 	characterSprite.addTexture("walk", 2);
 
+	characterSprite.addTexture("carry", 0);
+	characterSprite.addTexture("carry", 1);
+	characterSprite.addTexture("carry", 2);
+
 	characterSprite.addTexture("attack", 0);
 	characterSprite.addTexture("attack", 1);
 	characterSprite.addTexture("attack", 2);
@@ -74,7 +78,7 @@ void Chopping::update(Character& character, sf::Time dt)
 {
 }
 
-void Character::update(sf::Time deltaTime, Map& map)
+void Character::update(sf::Time deltaTime)
 {
 	characterSprite.update(deltaTime);
 	if(currentState)
@@ -104,6 +108,10 @@ sf::Vector2f Character::getPosition() const
 sf::Vector2f Character::getDirection() const
 {
 	return direction;
+}
+
+sf::FloatRect Character::getGlobalBounds() const {
+	return characterSprite.getGlobalBounds();
 }
 
 void Character::setState(std::unique_ptr<CharacterState> newState)
@@ -198,4 +206,21 @@ void Character::actionCompleted(std::unique_ptr<Action> action)
 	{
 		schedule.front()->start();
 	}
+}
+
+std::unique_ptr<Character> Character::clone() const {
+	// Create a new character using the same data templates
+	auto newChar = std::make_unique<Character>(characterData, characterSprite.getData());
+
+	// Copy visual transform
+	newChar->setPosition(characterSprite.getPosition());
+	newChar->setDirection(direction);
+
+	// Copy inventory items
+	newChar->inventory = this->inventory; // assuming Inventory supports copy
+
+	// Reset to idle
+	newChar->setState(std::make_unique<Idle>());
+
+	return newChar;
 }

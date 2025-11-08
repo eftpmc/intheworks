@@ -7,13 +7,14 @@
 #include <vector>
 
 #include "DataClasses.h"
-#include "Character.h"
+#include "CharacterManager.h"
 #include "ObjectManager.h"
 
 class Map {
 public:
 	Map();
 	ObjectManager& getObjectManager() { return objectManager; }
+	CharacterManager& getCharacterManager() { return characterManager; }
 	void draw(sf::RenderWindow& window) const;
 	void update(sf::Time& deltaTime);
 protected:
@@ -24,5 +25,5 @@ protected:
 	std::ifstream infile;
 
 	ObjectManager objectManager;
-	std::vector<std::unique_ptr<Character>> characters;
+	CharacterManager characterManager;
 };

@@ -6,7 +6,7 @@ ObjectManager::ObjectManager() {
 	defaultObjects.emplace(
 		"Tree",
 		std::make_unique<Tree>(
-			AnimatedSpriteData("tree", 112, 42, Size(28, 42), Size(0, 0), 28, .5f),
+			AnimatedSpriteData("tree", 112, 42, Size(28, 42), Size(0, 0), 28, .05f),
 			"Wood",
 			50));
 
@@ -16,7 +16,11 @@ ObjectManager::ObjectManager() {
             AnimatedSpriteData("wood", 16, 16, Size(16, 16), Size(0, 0), 16, .5f)));
 }
 void ObjectManager::update(sf::Time deltaTime) {
-
+    for (const auto& pair : objects) {
+        for (const auto& object : pair.second) {
+            object.get()->update(deltaTime);
+        }
+    }
 }
 void ObjectManager::draw(sf::RenderWindow& window) const {
 	for (const auto& pair : objects) {
