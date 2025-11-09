@@ -10,6 +10,8 @@
 #include "CharacterManager.h"
 #include "ObjectManager.h"
 
+class Clan;
+
 class Map {
 public:
 	Map();
@@ -26,4 +28,5 @@ protected:
 
 	ObjectManager objectManager;
 	CharacterManager characterManager;
+	Clan* clan;
 };

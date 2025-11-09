@@ -1,6 +1,9 @@
 #include "Map.h"
+#include "Clan.h"
 
 Map::Map() : rectSourceSprite(sf::Vector2(0,0), sf::Vector2(16,16)), infile("map.csv") {
+	clan = new Clan(this);
+
 	if (!texture.loadFromFile("tileset.png", false))
 	{
 		// error...
@@ -36,29 +39,7 @@ Map::Map() : rectSourceSprite(sf::Vector2(0,0), sf::Vector2(16,16)), infile("map
 	objectManager.createObject("Tree", sf::Vector2f(900.f, 700.f));
 
 	Character* human = characterManager.queryArea(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f))[0];
-
-	std::vector<GameObject*> assigned;
-
-	for (int i = 0; i < 3; i++) {
-		std::vector<GameObject*> query = objectManager.queryArea(
-			sf::Vector2f(0.f, 0.f),
-			sf::Vector2f(1280.f, 720.f),
-			"Tree"
-		);
-
-		auto it = std::find_if(query.begin(), query.end(),
-			[&assigned](GameObject* obj) {
-				bool alreadyAssigned = std::find(assigned.begin(), assigned.end(), obj) != assigned.end();
-				return obj && obj->isActive && !alreadyAssigned;
-			});
-
-		if (it != query.end()) {
-			GameObject* target = *it;
-			human->requestAction(std::make_unique<MoveToAction>(), target, this);
-			human->requestAction(std::make_unique<ChoppingAction>(), target, this);
-			assigned.push_back(target);
-		}
-	}
+	clan->addMember(human);
 }
 
 void Map::update(sf::Time& deltaTime) {

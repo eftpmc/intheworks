@@ -57,3 +57,13 @@ class MoveToAction : public Action {
 	void update(sf::Time dt);
 	void completeAction() override;
 };
+
+class PickUpAction : public Action {
+public:
+	PickUpAction()
+		: Action("Pick Up Target", CharacterData(0.f)) {
+	}
+	void start();
+	void update(sf::Time dt);
+	void completeAction() override;
+};

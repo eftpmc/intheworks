@@ -1,23 +1,15 @@
 #pragma once
-#include <vector>
-#include <SFML/Graphics.hpp>
 
-#include "Character.h"
-
-struct Resources {
-	int food = 0;
-	int wood = 0;
-	int stone = 0;
-};
+#include "Map.h"
 
 class Clan {
-	public:
-		Clan();
-		void update(sf::Time deltaTime);
-		void draw(sf::RenderWindow& window) const;
-		std::vector<Character>& getMembers() { return members; }
-private:
-	std::vector<Character> members;
-
-	Resources resources;
+public:
+	Clan(Map* map);
+	void update(sf::Time deltaTime);
+	void addMember(Character* character);
+	void chopTree();
+protected:
+	std::vector<Character*> members;
+	std::vector<GameObject*> assigned;
+	Map* map;
 };

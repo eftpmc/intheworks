@@ -75,3 +75,16 @@ void MoveToAction::completeAction() {
 	ctx.actor->setState(std::make_unique<Idle>());
 	std::cout << "MoveTo action complete." << std::endl;
 }
+
+void PickUpAction::start() {
+	ctx.actor->addToInventory(ctx.target->getType(), 5);
+	ctx.actor->actionCompleted(std::make_unique<PickUpAction>());
+}
+
+void PickUpAction::update(sf::Time dt) {
+	
+}
+
+void PickUpAction::completeAction() {
+	ctx.map->getObjectManager().removeObject(ctx.target);
+}
