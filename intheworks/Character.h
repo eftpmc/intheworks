@@ -4,7 +4,7 @@
 #include <string>
 #include "AnimatedSprite.h"
 #include "DataClasses.h"
-#include "Action.h"
+#include "behavior/Action.h"
 #include "Inventory.h"
 
 class Character;
@@ -64,9 +64,6 @@ public:
         inventory.removeItem(itemName, quantity);
     }
 
-	bool requestAction(std::unique_ptr<Action> action, GameObject* target, Map* map);
-	void actionCompleted(std::unique_ptr<Action> action);
-
 	bool moveTo(const GameObject* target);
     void move(const sf::Vector2f& offset);
 	void scale(const sf::Vector2f& factors);
@@ -76,7 +73,6 @@ protected:
 	const CharacterData characterData;
 
     std::unique_ptr<CharacterState> currentState;
-	std::queue<std::unique_ptr<Action>> schedule;
 	Inventory inventory;
 
     sf::Vector2f direction;

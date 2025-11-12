@@ -2,7 +2,7 @@
 #include <string>
 #include <SFML/System.hpp>
 #include <iostream>
-#include "DataClasses.h"
+#include "../DataClasses.h"
 
 class Character;
 
@@ -10,9 +10,11 @@ class GameObject;
 
 class Map;
 
+class Sequence;
+
 struct ActionContext {
+	Sequence* sequence = nullptr;
 	Character* actor = nullptr;
-	GameObject* target = nullptr;
 	Map* map = nullptr;
 };
 
@@ -38,32 +40,25 @@ protected:
 	ActionContext ctx;
 };
 
-class ChoppingAction : public Action {
+class ChopTreeAction : public Action {
 public:
-	ChoppingAction()
+	ChopTreeAction()
 		: Action("Chop Wood", CharacterData(0.f)) {}
 	void start() override;
 	void update(sf::Time dt) override;
 	void completeAction() override;
 private:
 	int stage = 1;
+	GameObject* tree = nullptr;
 };
 
-class MoveToAction : public Action {
+class MoveToClosestTreeAction : public Action {
 	public:
-	MoveToAction()
-		: Action("Move To Target", CharacterData(0.f)) {}
+		MoveToClosestTreeAction()
+		: Action("Move To Closest Tree", CharacterData(0.f)) {}
 	void start();
 	void update(sf::Time dt);
 	void completeAction() override;
-};
-
-class PickUpAction : public Action {
-public:
-	PickUpAction()
-		: Action("Pick Up Target", CharacterData(0.f)) {
-	}
-	void start();
-	void update(sf::Time dt);
-	void completeAction() override;
+private:
+	GameObject* tree = nullptr;
 };

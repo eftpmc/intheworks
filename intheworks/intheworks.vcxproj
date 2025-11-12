@@ -139,8 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Action.cpp" />
     <ClCompile Include="AnimatedSprite.cpp" />
+    <ClCompile Include="behavior\Action.cpp" />
+    <ClCompile Include="behavior\Condition.cpp" />
+    <ClCompile Include="behavior\Selector.cpp" />
+    <ClCompile Include="behavior\Sequence.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="Clan.cpp" />
@@ -151,8 +154,11 @@
     <ClCompile Include="Spritesheet.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Action.h" />
     <ClInclude Include="AnimatedSprite.h" />
+    <ClInclude Include="behavior\Action.h" />
+    <ClInclude Include="behavior\Condition.h" />
+    <ClInclude Include="behavior\Selector.h" />
+    <ClInclude Include="behavior\Sequence.h" />
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="Clan.h" />
     <ClInclude Include="DataClasses.h" />
@@ -164,8 +170,6 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Spritesheet.h" />
     <ClInclude Include="Tree.h" />
-    <ClInclude Include="UIElement.h" />
-    <ClInclude Include="UIElementManager.h" />
     <ClInclude Include="Wood.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

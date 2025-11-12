@@ -83,11 +83,6 @@ void Character::update(sf::Time deltaTime)
 	characterSprite.update(deltaTime);
 	if(currentState)
 		currentState->update(*this, deltaTime);
-
-	if (!schedule.empty())
-	{
-		schedule.front()->update(deltaTime);
-	}
 }
 
 void Character::draw(sf::RenderWindow& window) const
@@ -170,42 +165,6 @@ void Character::move(const sf::Vector2f& offset)
 void Character::scale(const sf::Vector2f& factors)
 {
 	characterSprite.scale(factors);
-}
-
-bool Character::requestAction(std::unique_ptr<Action> action, GameObject* target, Map* map)
-{
-	for(int i = 0; i < sizeof(CharacterData) / sizeof(float); i++)
-	{
-		const float* characterDataPtr = reinterpret_cast<const float*>(&characterData);
-		const float* minConditionsPtr = reinterpret_cast<const float*>(&action->getMinConditions());
-		if (characterDataPtr[i] < minConditionsPtr[i])
-			return false;
-	}
-
-	ActionContext ctx{ this, target, map };
-	action->setContext(ctx);
-
-	schedule.push(std::move(action));
-
-	if(schedule.size() == 1)
-	{
-		schedule.front()->start();
-	}
-	return true;
-}
-
-void Character::actionCompleted(std::unique_ptr<Action> action)
-{
-	if (!schedule.empty() && schedule.front()->getName() == action->getName())
-	{
-		schedule.front()->completeAction();
-		schedule.pop();
-	}
-
-	if (!schedule.empty())
-	{
-		schedule.front()->start();
-	}
 }
 
 std::unique_ptr<Character> Character::clone() const {

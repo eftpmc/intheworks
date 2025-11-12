@@ -10,6 +10,7 @@
 #include "CharacterManager.h"
 #include "ObjectManager.h"
 
+class shouldChopWoodSelector;
 class Clan;
 
 class Map {
@@ -29,4 +30,5 @@ protected:
 	ObjectManager objectManager;
 	CharacterManager characterManager;
 	Clan* clan;
+	shouldChopWoodSelector* chopWood;
 };

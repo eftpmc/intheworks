@@ -1,10 +1,12 @@
 #include "Map.h"
 #include "Clan.h"
+#include "behavior/Selector.h"
 
-Map::Map() : rectSourceSprite(sf::Vector2(0,0), sf::Vector2(16,16)), infile("map.csv") {
+Map::Map() : rectSourceSprite(sf::Vector2(0,0), sf::Vector2(16,16)), infile("tilelayers/base.csv") {
 	clan = new Clan(this);
+	chopWood = new shouldChopWoodSelector();
 
-	if (!texture.loadFromFile("tileset.png", false))
+	if (!texture.loadFromFile("resources/tileset.png", false))
 	{
 		// error...
 	}
@@ -40,11 +42,15 @@ Map::Map() : rectSourceSprite(sf::Vector2(0,0), sf::Vector2(16,16)), infile("map
 
 	Character* human = characterManager.queryArea(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f))[0];
 	clan->addMember(human);
+
+	SelectorContext ctx{ human, this };
+	chopWood->setContext(ctx);
 }
 
 void Map::update(sf::Time& deltaTime) {
 	characterManager.update(deltaTime);
 	objectManager.update(deltaTime);
+	chopWood->update(deltaTime);
 }
 
 void Map::draw(sf::RenderWindow& window) const {
